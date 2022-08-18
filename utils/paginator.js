@@ -66,7 +66,7 @@ const paginator = (chatId, bot) => {
                 return
             }
             clearInterval(sendResult)
-        }, 1000)
+        }, 30000)
 
         if (index < result.length) {
             sendResult()
