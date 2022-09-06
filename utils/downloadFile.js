@@ -13,7 +13,7 @@ const downloadFile = async (uri, fileName) => {
       responseType: 'stream',
     });
 
-    const path = `cars/${fileName}.jpg`
+    const path = `cars/${fileName}`
 
     await pipeline(request.data, fs.createWriteStream(path))
     console.log('download png pipeline successful') 

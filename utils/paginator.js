@@ -42,7 +42,7 @@ const paginator = (chatId, bot) => {
             let carPhoto = items[i].getElementsByClassName('listing-item__wrap')[0]
                 .getElementsByClassName('listing-item__photo')[0].getElementsByTagName('img')[0].getAttribute('data-src')
 
-            const path = downloadFile(carPhoto, (carPhoto.replace(/\//g,'')))
+            const path = downloadFile(carPhoto, (carPhoto.replace(/\//g,'').replace(/https:/, '')))
 
             cars.push({
                 title: carTitle,
@@ -59,16 +59,22 @@ const paginator = (chatId, bot) => {
                 const message = `${result[i]['title'].toString()} \nЦена: ${result[i]['price'].toString()}$ \n\n${result[i]['params'][0]}\n${result[i]['params'][1]}\n${result[i]['params'][2]}\n${result[i]['params'][3]}\n${result[i]['params'][4]}\n`
 
                 result[i]['photo'].then(fileName => {
-                    bot.sendPhoto(chatId, `${path.resolve('/Users/cogniteq/Documents/www/tgBot/', fileName)}`, {caption: message})
+                    console.log(__dirname + '..');
+                    bot.sendPhoto(chatId, path.resolve(__dirname.replace(/utils/, ''), fileName), {caption: message})
                     return
                 })
                 index++
                 return
             }
             clearInterval(sendResult)
-        }, 30000)
+        }, 5000)
 
         if (index < result.length) {
+            sendResult()
+        }
+
+        if (index > result.length) {
+            filters.page++
             sendResult()
         }
     })
