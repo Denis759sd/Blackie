@@ -1,8 +1,7 @@
 const TelegramBot = require('node-telegram-bot-api')
 const express = require('express')
-//const { getScreenshot } = require('./utils/get-screenshot')
 const { getRandomInt } = require('./utils/getRandomInt')
-const { paginator } = require('./utils/paginator')
+const { startParse, stopParse } = require('./utils/paginator')
 
 const filters = require('./filters.json')
 const articles = require('./articles.json')
@@ -12,7 +11,6 @@ const fs = require('fs')
 const token = '2140175033:AAG5EPz7Z2TfYxeBiDan_YjITgNTumMPuPg'
 const bot = new TelegramBot(token, {polling: true})
 const agsmrrrrr = 1170973486
-
 
 const app = express()
 app.use(express.json())
@@ -31,25 +29,11 @@ setInterval(() => {
     let seconds = day.getSeconds()
     for (let i = 0; i < 23; i++) {
         if (hour === i && minutes === 0 && seconds === 0){
-            bot.sendMessage(1170973486, articles.title[getRandomInt(0, articles.title.length)])
+            bot.sendMessage(agsmrrrrr, articles.title[getRandomInt(0, articles.title.length)])
             console.log(`send to agsmrrrrr`, `${hour}h-${minutes}m-${seconds}s`);
         }
-        //console.log(`${hour}.${minutes}.${seconds}`)
     }
     
-}, 1000)
-
-setInterval(() => {
-    let day = new Date()
-    let hour = day.getHours()        
-    let minutes = day.getMinutes()
-    let seconds = day.getSeconds()
-    if (hour === 13 && minutes === 42 && seconds === 40){
-            bot.sendPoll(agsmrrrrr, 'Милая ты меня любишь?🥺🥺🥺', [`Да❤`, `Конечно люблю❤`])    
-        // bot.sendMessage(1170973486, articles.title[getRandomInt(0, articles.title.length)])
-            console.log('check')
-        }
-	//console.log('check2');
 }, 1000)
 
 bot.onText(/\/echo/, (msg, match) => {
@@ -61,14 +45,14 @@ bot.onText(/\/echo/, (msg, match) => {
 bot.onText(/\/parse/, (msg, match) => {
     const chatId = msg.chat.id
 
-    paginator(chatId, bot, true)
+    startParse(chatId, bot)
     bot.sendMessage(chatId, 'Machine parsing start!')
 })
 
 bot.onText(/\/stop/, (msg, match) => {
     const chatId = msg.chat.id
 
-    paginator(chatId, bot, false)
+    stopParse()
     bot.sendMessage(chatId, 'Machine parsing stopped!')
 })
 
@@ -107,13 +91,7 @@ bot.onText(/\/maxYear (\d+)/, (msg, match) => {
 bot.onText(/\/logs/, (msg, match) => {
     const chatId = msg.chat.id
     if(msg.from.username === 'oll_ti_mist' || msg.from.username === 'agsmrrrrr') {
-        setTimeout(() => {
-            // getScreenshot()
-            // if(msg.from.username === 'oll_ti_mist') {
-            //     bot.sendPhoto(chatId, __dirname + '/screenshots/shot.jpg')
-            // }
-            bot.sendDocument(chatId, 'messages.txt')
-        }, 10000)
+        bot.sendDocument(chatId, 'messages.txt')
     }
 })
 
@@ -138,7 +116,3 @@ bot.on('message', (msg) => {
 
 	console.log(msg.text)
 })
-
-// app.listen(5000, () => {
-//     console.log(`Server started on port ${5000}`);
-// })
