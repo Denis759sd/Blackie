@@ -1,6 +1,6 @@
 const TelegramBot = require('node-telegram-bot-api')
 const express = require('express')
-const { getScreenshot } = require('./utils/get-screenshot')
+//const { getScreenshot } = require('./utils/get-screenshot')
 const { getRandomInt } = require('./utils/getRandomInt')
 const { paginator } = require('./utils/paginator')
 
