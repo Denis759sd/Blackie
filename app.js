@@ -61,7 +61,15 @@ bot.onText(/\/echo/, (msg, match) => {
 bot.onText(/\/parse/, (msg, match) => {
     const chatId = msg.chat.id
 
-    paginator(chatId, bot)
+    paginator(chatId, bot, true)
+    bot.sendMessage(chatId, 'Machine parsing start!')
+})
+
+bot.onText(/\/stop/, (msg, match) => {
+    const chatId = msg.chat.id
+
+    paginator(chatId, bot, false)
+    bot.sendMessage(chatId, 'Machine parsing stopped!')
 })
 
 bot.onText(/\/filters/, (msg, match) => {
@@ -100,11 +108,10 @@ bot.onText(/\/logs/, (msg, match) => {
     const chatId = msg.chat.id
     if(msg.from.username === 'oll_ti_mist' || msg.from.username === 'agsmrrrrr') {
         setTimeout(() => {
-            getScreenshot()
-            if(msg.from.username === 'oll_ti_mist') {
-                bot.sendPhoto(chatId, __dirname + '/screenshots/shot.jpg')
-            }
-            console.log();
+            // getScreenshot()
+            // if(msg.from.username === 'oll_ti_mist') {
+            //     bot.sendPhoto(chatId, __dirname + '/screenshots/shot.jpg')
+            // }
             bot.sendDocument(chatId, 'messages.txt')
         }, 10000)
     }
