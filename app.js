@@ -48,6 +48,7 @@ bot.onText(/\/echo/, (msg, match) => {
     bot.sendMessage(chatId, msg.text)
 })
 
+// Parser
 bot.onText(/\/parse/, (msg, match) => {
     const chatId = msg.chat.id
 
@@ -62,6 +63,7 @@ bot.onText(/\/stop/, (msg, match) => {
     bot.sendMessage(chatId, 'Machine parsing stopped!')
 })
 
+// Filters
 bot.onText(/\/filters/, (msg, match) => {
     const chatId = msg.chat.id
 
@@ -117,7 +119,6 @@ bot.on('message', (msg) => {
 
     if (msg.text === '15.10.2021') {
         bot.sendMessage(chatId, articles.title[2])
-        bot.sendPhoto(chatId, )
     }
 
 	console.log(msg.text)
