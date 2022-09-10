@@ -35,7 +35,7 @@ setInterval(() => {
 
             bot.sendMessage(agsmrrrrr, articles.title[getRandomInt(0, articles.title.length - 1)])
             bot.sendMessage(olltimist, message)
-            // bot.sendMessage(agsmrrrrr, messgage)
+            
             console.log(`send to agsmrrrrr`, `${hour}h-${minutes}m-${seconds}s`);
         }
     }
