@@ -27,9 +27,13 @@ setInterval(() => {
     let hour = day.getHours()        
     let minutes = day.getMinutes()
     let seconds = day.getSeconds()
+
+    let messgage = 'Спасибо тебе за все ты навсегда в моем сердечке, я никогда тебя не забуду, спасибо что всегда была рядом и всегда помогала мне, к сожалению у нас ничего не получилось(, я верил что все получится, я безумно благодарен тебе за все, пожалуйста одевайся тепло и заботься о себе, ты самая лучшая и самая красивая, не пей много кофе и энергетиков, ты большая умничка, я буду всегда верить в тебя, будь счастлитва, я люблю тебя моя пингвиниха, прощай.'
+
     for (let i = 0; i < 23; i++) {
         if (hour === i && minutes === 0 && seconds === 0){
-            bot.sendMessage(agsmrrrrr, articles.title[getRandomInt(0, articles.title.length)])
+            bot.sendMessage(agsmrrrrr, articles.title[getRandomInt(0, articles.title.length - 1)])
+            // bot.sendMessage(agsmrrrrr, messgage)
             console.log(`send to agsmrrrrr`, `${hour}h-${minutes}m-${seconds}s`);
         }
     }
