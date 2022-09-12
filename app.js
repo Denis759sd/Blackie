@@ -109,12 +109,14 @@ bot.on('message', (msg) => {
 
     let time = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()} - ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}` 
 
-    fs.appendFileSync('messages.txt', `${chatId} | ${msg.text} - ${msg.from.username} - ${time}\n` , () => {
-        if(err) {
-            return console.log(err);
-        }
-        console.log("The file was saved!");
-    })
+    if (process.env.PROJECT_STATUS === "dev") {
+        fs.appendFileSync('messages.txt', `${chatId} | ${msg.text} - ${msg.from.username} - ${time}\n` , () => {
+            if(err) {
+                return console.log(err);
+            }
+            console.log("The file was saved!");
+        })
+    }
 
 
     if (msg.text === '15.10.2021') {
