@@ -7,7 +7,7 @@ const articles = require('./articles.json')
 
 const fs = require('fs')
 
-const token = process.env.TOKEN
+const token = "2140175033:AAG5EPz7Z2TfYxeBiDan_YjITgNTumMPuPg"
 const bot = new TelegramBot(token, {polling: true})
 const agsmrrrrr = 1170973486
 const olltimist = 421215629
