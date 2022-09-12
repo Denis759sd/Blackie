@@ -1,5 +1,4 @@
 const TelegramBot = require('node-telegram-bot-api')
-const express = require('express')
 const { getRandomInt } = require('./utils/getRandomInt')
 const { startParse, stopParse } = require('./utils/paginator')
 
@@ -8,20 +7,12 @@ const articles = require('./articles.json')
 
 const fs = require('fs')
 
-const token = '2140175033:AAG5EPz7Z2TfYxeBiDan_YjITgNTumMPuPg'
+const token = process.env.TOKEN
 const bot = new TelegramBot(token, {polling: true})
 const agsmrrrrr = 1170973486
 const olltimist = 421215629
 
-const app = express()
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-
-app.get('/', (req, res) => {
-    bot.sendMessage(req.body.id, req.body.text)
-
-    res.json({status: `${req.body.text}`})
-})
+var port = process.env.PORT || 8080;
 
 setInterval(() => {
     let day = new Date()
