@@ -11,7 +11,7 @@ let cars = []
 
 const paginator = (chatId, bot) => {
     if (isParse) {
-        axios.get(`https://cars.av.by/filter?brands[0][brand]=6&year[min]=${filters.minYear}&year[max]=${filters.maxYear}&page=${filters.page}`).then(response => {
+        axios.get(`https://cars.av.by/filter?brands['${filters.brand}'][brand]=6&year[min]=${filters.minYear}&year[max]=${filters.maxYear}&page=${filters.page}`).then(response => {
             let currentPage = response.data
             const dom = new JSDOM(currentPage)
 

@@ -30,13 +30,11 @@ setInterval(() => {
             console.log(`send to agsmrrrrr`, `${hour}h-${minutes}m-${seconds}s`);
         }
     }
-    
 }, 1000)
 
-bot.onText(/\/echo (.+?)/, (msg, match) => {
+bot.onText(/\/echo(.+)?/, (msg, match) => {
     const chatId = msg.chat.id
 
-    console.log(msg.text.replace('/echo', '').trim().empty);
     if(msg.text.replace('/echo', '').trim() !== '') {
         bot.sendMessage(chatId, msg.text.replace('/echo', ''))
         return
@@ -65,7 +63,7 @@ bot.onText(/\/filters/, (msg, match) => {
     const chatId = msg.chat.id
 
     if (msg.text.replace('/filters', '') === '') {
-        bot.sendMessage(chatId, `Filters - page: ${filters.page} | minYear: ${filters.minYear} | maxYear: ${filters.maxYear}`)
+        bot.sendMessage(chatId, `Filters \n| brand:${filters.brand} |\n| page: ${filters.page} |\n| minYear: ${filters.minYear} |\n| maxYear: ${filters.maxYear} |`)
         return
     }
 
@@ -93,6 +91,13 @@ bot.onText(/\/maxYear (\d+)/, (msg, match) => {
     filters.maxYear = Number(text)
 })
 
+bot.onText(/\/brand (.+)/, (msg, match) => {
+    console.log(msg)
+
+    const text = msg.text.replace('/brand', '')
+    filters.brand = text
+})
+
 bot.onText(/\/logs/, (msg, match) => {
     const chatId = msg.chat.id
     if(msg.from.username === 'oll_ti_mist' || msg.from.username === 'agsmrrrrr') {
@@ -114,7 +119,6 @@ bot.on('message', (msg) => {
             console.log("The file was saved!");
         })
     }
-
 
     if (msg.text === '15.10.2021') {
         bot.sendMessage(chatId, articles.title[2])

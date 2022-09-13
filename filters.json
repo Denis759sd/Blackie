@@ -2,6 +2,7 @@
   "filters": {
     "page": 1,
     "minYear": "",
-    "maxYear": ""
+    "maxYear": "",
+    "brand": ""
   }
 }
