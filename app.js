@@ -12,7 +12,7 @@ const bot = new TelegramBot(token, {polling: true})
 const agsmrrrrr = 1170973486
 const olltimist = 421215629
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8000;
 
 setInterval(() => {
     let day = new Date()
@@ -33,8 +33,14 @@ setInterval(() => {
     
 }, 1000)
 
-bot.onText(/\/echo/, (msg, match) => {
+bot.onText(/\/echo (.+?)/, (msg, match) => {
     const chatId = msg.chat.id
+
+    console.log(msg.text.replace('/echo', '').trim().empty);
+    if(msg.text.replace('/echo', '').trim() !== '') {
+        bot.sendMessage(chatId, msg.text.replace('/echo', ''))
+        return
+    }
 
     bot.sendMessage(chatId, msg.text)
 })

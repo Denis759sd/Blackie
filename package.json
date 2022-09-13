@@ -10,6 +10,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "polling": {
+    "interval": 1000
+  },
   "dependencies": {
     "axios": "^0.27.2",
     "jsdom": "^20.0.0",
