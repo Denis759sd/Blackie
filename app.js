@@ -1,9 +1,11 @@
 const TelegramBot = require('node-telegram-bot-api')
 const { getRandomInt } = require('./utils/getRandomInt')
-const { startParse, stopParse } = require('./utils/paginator')
+const { pushToJson } = require('./utils/addToJsonFile')
 
-const filters = require('./filters.json')
+const { Stickers } = require('./enums/stickers')
+
 const articles = require('./articles.json')
+const stickers = require('./stickers.json')
 
 const fs = require('fs')
 
@@ -22,12 +24,16 @@ setInterval(() => {
 
     for (let i = 0; i < 23; i++) {
         if (hour === i && minutes === 0 && seconds === 0){
-            let message = `Самой красивой девочке на свете отправленно сообщение в: ${hour}h-${minutes}m-${seconds}s`
+            let randomArticleNum = getRandomInt(0, articles.title.length)
+            let message = `Самой красивой девочке на свете отправленно сообщение, \nпод индексом ${randomArticleNum} \n${hour}:${minutes}:${seconds}`
 
-            bot.sendMessage(agsmrrrrr, articles.title[getRandomInt(0, articles.title.length - 1)])
-            bot.sendMessage(olltimist, message)
+            bot.sendMessage(agsmrrrrr, articles.title[randomArticleNum]).then( () => {
+                bot.sendSticker(agsmrrrrr, stickers.name[Stickers.LOVE]).then(() => {
+                    bot.sendMessage(olltimist, message)
+                })
+            })
             
-            console.log(`send to agsmrrrrr`, `${hour}h-${minutes}m-${seconds}s`);
+            console.log(`send to agsmrrrrr`, `${hour}h-${minutes}m-${seconds}`);
         }
     }
 }, 1000)
@@ -43,59 +49,20 @@ bot.onText(/\/echo(.+)?/, (msg, match) => {
     bot.sendMessage(chatId, msg.text)
 })
 
-// Parser
-bot.onText(/\/parse/, (msg, match) => {
+bot.onText(/\/love(.+)?/, (msg, match) => {
     const chatId = msg.chat.id
 
-    startParse(chatId, bot)
-    bot.sendMessage(chatId, 'Machine parsing start!')
-})
-
-bot.onText(/\/stop/, (msg, match) => {
-    const chatId = msg.chat.id
-
-    stopParse()
-    bot.sendMessage(chatId, 'Machine parsing stopped!')
-})
-
-// Filters
-bot.onText(/\/filters/, (msg, match) => {
-    const chatId = msg.chat.id
-
-    if (msg.text.replace('/filters', '') === '') {
-        bot.sendMessage(chatId, `Filters \n| brand:${filters.brand} |\n| page: ${filters.page} |\n| minYear: ${filters.minYear} |\n| maxYear: ${filters.maxYear} |`)
+    if(msg.text.replace('/love', '').trim() !== '') {
+        bot.sendMessage(olltimist, msg.text.replace('/love', ''))
         return
     }
 
-    bot.sendMessage(chatId, `Filters - page: ${filters.page} | minYear: ${filters.minYear} | maxYear: ${filters.maxYear}`)
-})
-
-bot.onText(/\/page (\d+)/, (msg, match) => {
-    console.log(msg);
-
-    const text = msg.text.replace('/page ', '');
-    filters.page = Number(text)
-})
-
-bot.onText(/\/minYear (\d+)/, (msg, match) => {
-    console.log(msg);
-
-    const text = msg.text.replace('/minYear ', '');
-    filters.minYear = Number(text)
-})
-
-bot.onText(/\/maxYear (\d+)/, (msg, match) => {
-    console.log(msg);
-
-    const text = msg.text.replace('/maxYear ', '');
-    filters.maxYear = Number(text)
-})
-
-bot.onText(/\/brand (.+)/, (msg, match) => {
-    console.log(msg)
-
-    const text = msg.text.replace('/brand', '')
-    filters.brand = text
+    bot.sendMessage(agsmrrrrr, articles.title[getRandomInt(0, articles.title.length)]).then(() => {
+        bot.sendMessage(chatId, "Message send success!")
+    }).catch((err) => {
+        console.log(err);
+        bot.sendMessage(chatId, "Message send failure!")
+    })
 })
 
 bot.onText(/\/logs/, (msg, match) => {
