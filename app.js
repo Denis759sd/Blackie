@@ -55,11 +55,13 @@ bot.onText(/\/love(.+)?/, (msg, match) => {
         return
     }
 
-    bot.sendMessage(agsmrrrrr, articles.title[getRandomInt(0, articles.title.length)]).then(() => {
-        bot.sendMessage(chatId, "Message send success!")
-    }).catch((err) => {
-        console.log(err);
-        bot.sendMessage(chatId, "Message send failure!")
+    bot.sendMessage(agsmrrrrr, articles.title[randomArticleNum]).then( () => {
+        bot.sendSticker(agsmrrrrr, stickers.name[Stickers.LOVE]).then(() => {
+            bot.sendMessage(olltimist, 'Message send success!');
+        }).catch( (err) => {
+            bot.sendMessage(olltimist, 'Message send failure!');
+            console.log(`Error: ${err}`);
+        })
     })
 })
 
