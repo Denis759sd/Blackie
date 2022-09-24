@@ -14,8 +14,6 @@ const bot = new TelegramBot(token, {polling: true})
 const agsmrrrrr = 1170973486
 const olltimist = 421215629
 
-var port = process.env.PORT || 8000;
-
 setInterval(() => {
     let day = new Date()
     let hour = day.getHours()        
