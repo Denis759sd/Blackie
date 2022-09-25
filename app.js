@@ -1,4 +1,5 @@
 const TelegramBot = require('node-telegram-bot-api')
+
 const { getRandomInt } = require('./utils/getRandomInt')
 const { pushToJson } = require('./utils/addToJsonFile')
 
@@ -9,7 +10,7 @@ const stickers = require('./stickers.json')
 
 const fs = require('fs')
 
-const token = "2140175033:AAHpw5NQOrV5-mOgDCw8FGlOdUcIAKZZYoI"
+const token = "2140175033:AAEAOOTqmypp5BEufzzjHUTAlW7BDQ2UpEo"
 const bot = new TelegramBot(token, {polling: true})
 const agsmrrrrr = 1170973486
 const olltimist = 421215629
@@ -29,8 +30,12 @@ setInterval(() => {
                 bot.sendSticker(agsmrrrrr, stickers.name[Stickers.LOVE]).then(() => {
                     bot.sendMessage(olltimist, message)
                 })
+            }).then(data => {
+                console.log(`Data: ${data}`);
+            }).catch(err => {
+                console.log(`Error: ${err}`);
             })
-            
+        
             console.log(`send to agsmrrrrr`, `${hour}h-${minutes}m-${seconds}`);
         }
     }
@@ -61,7 +66,11 @@ bot.onText(/\/love(.+)?/, (msg, match) => {
         }).catch( (err) => {
             bot.sendMessage(olltimist, 'Message send failure!');
             console.log(`Error: ${err}`);
+        }).catch( err => {
+            console.log(`Error: ${err}`);
         })
+    }).catch(err => {
+        console.log(`Error: ${err}`);
     })
 })
 
