@@ -16,15 +16,17 @@ const agsmrrrrr = 1170973486
 const olltimist = 421215629
 
 setInterval(() => {
+    let time = new Date().toLocaleString('en-Us', {timeZone: 'Europe/Minsk'})
+
     let day = new Date()
-    let hour = day.getHours()        
+    let hour = day.getHours()
     let minutes = day.getMinutes()
     let seconds = day.getSeconds()
 
     for (let i = 0; i < 23; i++) {
         if (hour === i && minutes === 0 && seconds === 0){
             let randomArticleNum = getRandomInt(0, articles.title.length)
-            let message = `Самой красивой девочке на свете отправленно сообщение, \nпод индексом ${randomArticleNum} \n${hour}:${minutes}:${seconds}`
+            let message = `Самой красивой девочке на свете отправленно сообщение, \nпод индексом ${randomArticleNum} \n${time}`
 
             bot.sendMessage(agsmrrrrr, articles.title[randomArticleNum]).then( () => {
                 bot.sendSticker(agsmrrrrr, stickers.name[Stickers.LOVE]).then(() => {
@@ -36,7 +38,7 @@ setInterval(() => {
                 console.log(`Error: ${err}`);
             })
         
-            console.log(`send to agsmrrrrr`, `${hour}h-${minutes}m-${seconds}`);
+            console.log(`send to agsmrrrrr`, time);
         }
     }
 }, 1000)
